@@ -15,10 +15,10 @@ class MR1Mapper:
         for line in sys.stdin:
             try:
                 if 'productId' in line:
-                    prodcut_id = line.split(":")[1].strip()
+                    product_id = line.split(":")[1].strip()
        
                 elif 'userId' in line:
-                    item_id = line.split(":")[1].strip()    
+                    user_id = line.split(":")[1].strip()    
 
                 elif 'score' in line:
                     user_rating = line.split(":")[1].strip()

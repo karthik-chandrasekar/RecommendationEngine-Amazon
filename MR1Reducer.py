@@ -15,25 +15,25 @@ class MR1Reducer:
         for line in sys.stdin:
             try:
                 if not line:continue
-                user_id, item_string = line.split("\t")
                 
+                user_id, item_string = line.split("\t")
+               
+                user_id, item_string = user_id.strip(), item_string.strip()
+ 
                 if cur_user_id == user_id or not cur_user_id:
                     cur_user_id = user_id
                     item_list.append(item_string)
                 
                 elif cur_user_id != user_id:
-                    print "%s\t%s" % (user_id, item_list)
+                    print "%s\t%s" % (cur_user_id, item_list)
                     item_list = [item_string]
                     cur_user_id = user_id           
-
        
             except:
                 continue            
 
-        print "%s\t%s" % (user_id, item_list)
+        print "%s\t%s" % (cur_user_id, item_list)
             
-
-
 if __name__ == "__main__":
     mr_obj = MR1Reducer()
     mr_obj.run()
