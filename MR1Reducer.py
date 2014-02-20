@@ -25,14 +25,15 @@ class MR1Reducer:
                     item_list.append(item_string)
                 
                 elif cur_user_id != user_id:
-                    print "%s\t%s" % (cur_user_id, item_list)
+                    print "%s\t%s" % (cur_user_id, list(set(item_list)))
                     item_list = [item_string]
                     cur_user_id = user_id           
        
             except:
-                continue            
+                continue  
+          
+        print "%s\t%s" % (cur_user_id, list(set(item_list)))
 
-        print "%s\t%s" % (cur_user_id, item_list)
             
 if __name__ == "__main__":
     mr_obj = MR1Reducer()
