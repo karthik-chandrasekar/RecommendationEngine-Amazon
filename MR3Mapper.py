@@ -13,15 +13,17 @@ class MR3Mapper:
         
         for line in sys.stdin:
             try:
+                line = line and line.strip()
                 if not line:continue
                 
-                user_id, item_string = line.strip().split("\t")
+                user_id, item_string = line.split("\t")
                 item_list = eval(item_string)
                
                 for item_rating in item_list:
                     print "%s\t%s:%s$%s" % (item_rating.split(":")[0], user_id, item_rating.split(":")[1], 'U') 
 
             except:
+                print "MR3-Mapper-Exception"
                 continue
 
 if __name__ == "__main__":
@@ -31,3 +33,6 @@ if __name__ == "__main__":
 #Note
 #key - <item_id>
 #value - <user_id:item_rating>
+#Delimiter - key-value - \t
+#Delimiter - itemid-userid - :
+#Delimiter - userid-flag - $
