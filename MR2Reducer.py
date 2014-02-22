@@ -5,7 +5,7 @@ import sys
 
 class MR2Reducer:
    
-    #Generate item-item vector
+    #Generate item - list of co-occurrence items
       
     def __init__(self):
         pass
@@ -20,32 +20,33 @@ class MR2Reducer:
         for line in sys.stdin:
            
             try: 
+                line = line and line.strip()
                 if not line:continue
-
-                key_item_id, val_item_id = line.strip().split("\t")
-                
-                if key_item_id == cur_key_item_id or not cur_key_item_id:
-                    
+                key_item_id, val_item_id = line.split("\t")
+               
+                if not cur_key_item_id:
                     cur_key_item_id = key_item_id
-                    if cur_val_item_id == val_item_id or not cur_val_item_id:
-                        if cur_val_item_id:pair_count += 1
-                        cur_val_item_id = val_item_id
-                        item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
+                    cur_val_item_id = val_item_id
+ 
+                elif key_item_id == cur_key_item_id:
 
-                    else:
+                    if cur_val_item_id == val_item_id:pair_count += 1
+
+                    elif cur_val_item_id != val_item_id:
+                        item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
                         cur_val_item_id = val_item_id
                         pair_count = 1
                                            
-                else:
+                elif key_item_id != cur_key_item_id:
                     item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
                     print "%s\t%s" % (cur_key_item_id, item_string_set)
                     cur_key_item_id = key_item_id
                     cur_val_item_id = val_item_id
                     item_string_set = set()
-                    item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
                     pair_count = 1
 
             except:
+                print "MR2-Reducer - Exception"
                 continue    
 
         item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
@@ -60,3 +61,6 @@ if __name__ == "__main__":
 #Note
 #Key - <item-id>
 #value - list of <item-id:pair_count> 
+#Delimiter - key-value - \t
+#Delimiter - itemid-paircount - :
+#Delimiter - Paircount-flag - $
