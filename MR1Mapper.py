@@ -14,14 +14,16 @@ class MR1Mapper:
 
         for line in sys.stdin:
             try:
+                line = line and line.strip()
+                if not line:continue
                 if 'productId' in line:
-                    product_id = line.split(":")[1].strip()
+                    product_id = line.split(":")[1]
        
                 elif 'userId' in line:
-                    user_id = line.split(":")[1].strip()    
+                    user_id = line.split(":")[1]   
 
                 elif 'score' in line:
-                    user_rating = line.split(":")[1].strip()
+                    user_rating = line.split(":")[1]
                     
                     if product_id and user_id and user_rating:
                         print "%s\t%s:%s" % (user_id, product_id, user_rating)
@@ -33,6 +35,7 @@ class MR1Mapper:
                 else:
                     continue
             except:
+                print "MR1- Mapper - Exception"
                 continue
 
 if __name__ == "__main__":
@@ -42,6 +45,8 @@ if __name__ == "__main__":
 #Note
 #key - user_id
 #value - product_id:user_rating
+#Delimiter - key, value - \t
+#Delimiter - Inside value - :
 
 #trap:
 #1) How to ensure input split does not split a single record which consists of multiple lines

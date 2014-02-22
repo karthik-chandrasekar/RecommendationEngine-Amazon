@@ -4,6 +4,9 @@
 import sys
 
 class MR1Reducer:
+    
+    #Generates user - all items are product he has rated
+
     def __init__(self):
         pass
 
@@ -14,14 +17,15 @@ class MR1Reducer:
  
         for line in sys.stdin:
             try:
+                line = line and line.strip()
                 if not line:continue
-                
                 user_id, item_string = line.split("\t")
-               
-                user_id, item_string = user_id.strip(), item_string.strip()
  
-                if cur_user_id == user_id or not cur_user_id:
+                if not cur_user_id:        
                     cur_user_id = user_id
+                    item_list = [item_string]
+    
+                elif cur_user_id == user_id:
                     item_list.append(item_string)
                 
                 elif cur_user_id != user_id:
@@ -30,6 +34,7 @@ class MR1Reducer:
                     cur_user_id = user_id           
        
             except:
+                print "MR1-Reducer-Exception"
                 continue  
           
         print "%s\t%s" % (cur_user_id, list(set(item_list)))
@@ -38,3 +43,9 @@ class MR1Reducer:
 if __name__ == "__main__":
     mr_obj = MR1Reducer()
     mr_obj.run()
+
+#Note
+#key - user-id
+#value - list of itemid:itemrating
+#delimiter - key - value - \t
+#delimiter - itemid - itemrating - :
