@@ -9,8 +9,13 @@ class MR4Mapper:
 
     def run(self):
         for line in sys.stdin:
-            if not line:continue
-            print line
+            try:
+                line = line and line.strip()
+                if not line:continue
+                print line
+            except:
+                print "MR4-Mapper-Exception"
+
 
 if __name__ == "__main__":
     mr_obj = MR4Mapper()

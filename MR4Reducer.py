@@ -14,16 +14,17 @@ class MR4Reducer:
         user_item_set = set()
                     
         for line in sys.stdin:
-                if not line or not line.strip():continue
+            try:
+                line = line and line.strip()
+                if not line :continue
                 item_id, value = line.strip().split("\t")
                 value_list = list(eval(value))            
 
                 if not cur_item_id:
                     cur_item_id = item_id
                     cur_val_set = value_list                
-                    item_id = None
 
-                if item_id and item_id == cur_item_id:
+                elif  item_id == cur_item_id:
                     if value_list[0].split("$")[1] == 'U':
                         for user in value_list:
                             user_id, rating = user.split("$")[0].split(":")
@@ -45,12 +46,22 @@ class MR4Reducer:
                     cur_item_id = None
                     user_item_set = set() 
 
-                elif item_id and item_id != cur_item_id:
+                elif item_id != cur_item_id:
                     cur_item_id = item_id
                     cur_val_set = value_list
                     user_item_set = set()
+            
+            except:
+                print "MR4-Reducer- Exception"
+                continue
 
 
 if __name__ == "__main__":
     mr_obj = MR4Reducer()
     mr_obj.run()
+
+#Note
+#Key - user id
+#Value - weighted item ids
+#Delimiter - key - value - \t
+#Delimiter - item id - weight - ":"
