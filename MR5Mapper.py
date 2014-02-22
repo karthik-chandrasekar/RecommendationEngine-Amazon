@@ -9,8 +9,13 @@ class MR5Mapper:
 
     def run(self):
         for line in sys.stdin:
-            if not line:continue
-            print line        
+            try:
+                line  = line and line.strip()
+                if not line:continue
+                print line        
+
+            except:
+                print "MR5-Mapper- Exception"            
 
 if __name__ == "__main__":
     mr_obj = MR5Mapper()
