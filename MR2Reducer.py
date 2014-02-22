@@ -30,25 +30,25 @@ class MR2Reducer:
                     if cur_val_item_id == val_item_id or not cur_val_item_id:
                         if cur_val_item_id:pair_count += 1
                         cur_val_item_id = val_item_id
-                        item_string_set.add("%s:%s" % (cur_val_item_id, pair_count))
+                        item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
 
                     else:
                         cur_val_item_id = val_item_id
                         pair_count = 1
                                            
                 else:
-                    item_string_set.add("%s:%s" % (cur_val_item_id, pair_count))
+                    item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
                     print "%s\t%s" % (cur_key_item_id, item_string_set)
                     cur_key_item_id = key_item_id
                     cur_val_item_id = val_item_id
                     item_string_set = set()
-                    item_string_set.add("%s:%s" % (cur_val_item_id, pair_count))
+                    item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
                     pair_count = 1
 
             except:
                 continue    
 
-        item_string_set.add("%s:%s" % (cur_val_item_id, pair_count))
+        item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
         print "%s\t%s" % (cur_key_item_id, item_string_set)
             
 
