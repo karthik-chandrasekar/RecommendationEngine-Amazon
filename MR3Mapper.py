@@ -19,7 +19,7 @@ class MR3Mapper:
                 item_list = eval(item_string)
                
                 for item_rating in item_list:
-                    print "%s\t%s:%s" % (item_rating.split(":")[0], user_id, item_rating.split(":")[1]) 
+                    print "%s\t%s:%s$%s" % (item_rating.split(":")[0], user_id, item_rating.split(":")[1], 'U') 
 
             except:
                 continue
