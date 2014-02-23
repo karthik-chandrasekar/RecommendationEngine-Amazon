@@ -8,14 +8,12 @@ class MR1Mapper:
         pass
 
     def run(self):
-        product_id = None
-        user_id = None
-        user_rating = None
 
         for line in sys.stdin:
             try:
                 line = line and line.strip()
                 if not line:continue
+                
                 if 'productId' in line:
                     product_id = line.split(":")[1]
        
@@ -24,19 +22,9 @@ class MR1Mapper:
 
                 elif 'score' in line:
                     user_rating = line.split(":")[1]
-                    
-                    if product_id and user_id and user_rating:
-                        print "%s\t%s:%s" % (user_id, product_id, user_rating)
-      
-                    product_id = None
-                    user_id = None
-                    user_rating = None  
-
-                else:
-                    continue
+                    print "%s\t%s:%s" % (user_id, product_id, user_rating)
             except:
                 print "MR1- Mapper - Exception"
-                continue
 
 if __name__ == "__main__":
     mr_obj = MR1Mapper()
