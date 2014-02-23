@@ -47,7 +47,6 @@ class MR2Reducer:
 
             except:
                 print "MR2-Reducer - Exception"
-                continue    
 
         item_string_set.add("%s:%s$%s" % (cur_val_item_id, pair_count, 'P'))
         print "%s\t%s" % (cur_key_item_id, item_string_set)
