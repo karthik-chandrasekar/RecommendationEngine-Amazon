@@ -17,8 +17,11 @@ class MR4Reducer:
             try:
                 line = line and line.strip()
                 if not line :continue
-                item_id, value = line.strip().split("\t")
-                value_list = list(eval(value))            
+                item_id, value = line.split("\t")
+                    
+                #Performance trick
+                eval_call = eval('lambda: ' + value)
+                value_list = list(eval_call())            
 
                 if not cur_item_id:
                     cur_item_id = item_id
@@ -53,7 +56,6 @@ class MR4Reducer:
             
             except:
                 print "MR4-Reducer- Exception"
-                continue
 
 
 if __name__ == "__main__":
