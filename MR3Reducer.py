@@ -35,7 +35,6 @@ class MR3Reducer:
     
             except:
                 print "MR3 - Reducer - Exception"
-                continue
 
         print "%s\t%s" % (cur_item_id, user_string_set)
 
