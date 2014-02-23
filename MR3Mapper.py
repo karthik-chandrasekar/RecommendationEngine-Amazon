@@ -17,14 +17,16 @@ class MR3Mapper:
                 if not line:continue
                 
                 user_id, item_string = line.split("\t")
-                item_list = eval(item_string)
-               
+                
+                #Performance trick
+                eval_call = eval('lambda: ' + item_string)
+                item_list = eval_call()              
+ 
                 for item_rating in item_list:
                     print "%s\t%s:%s$%s" % (item_rating.split(":")[0], user_id, item_rating.split(":")[1], 'U') 
 
             except:
                 print "MR3-Mapper-Exception"
-                continue
 
 if __name__ == "__main__":
     mr_obj = MR3Mapper()
