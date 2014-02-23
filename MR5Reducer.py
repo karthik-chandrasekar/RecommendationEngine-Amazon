@@ -1,7 +1,7 @@
 #! /usr/bin/python
 #coding=utf-8
 
-import sys
+import sys,operator
 
 class MR5Reducer:
     #Generate final recommendation vector for every user
@@ -33,7 +33,8 @@ class MR5Reducer:
                     self.add_in_map(item_set, itemid_rating_map)
                                     
                 elif cur_user_id != user_id:
-                    print "%s\t%s" % (cur_user_id, itemid_rating_map)
+                    top_ten_reco = self.getTopTen(itemid_rating_map)
+                    print "%s\t%s" % (cur_user_id, top_ten_reco)
                     cur_user_id = user_id
                     itemid_rating_map = {}
                     self.add_in_map(item_set, itemid_rating_map)
@@ -41,7 +42,8 @@ class MR5Reducer:
             except:
                 print "MR5-Reducer-Exception"
 
-        print "%s\t%s" % (cur_user_id, itemid_rating_map)
+        top_ten_reco = self.getTopTen(itemid_rating_map)
+        print "%s\t%s" % (cur_user_id, top_ten_reco)
 
 
     def add_in_map(self, item_set, itemid_rating_map):
@@ -50,6 +52,10 @@ class MR5Reducer:
             item_id, rating = item.split(":")
             cur_rating = itemid_rating_map.setdefault(item_id, 0)
             itemid_rating_map[item_id] = cur_rating + float(rating)
+
+
+    def getTopTen(self, itemid_rating_map):
+        return zip(sorted(itemid_rating_map.iteritems(), key=operator.itemgetter(1), reverse=True))[:10]
 
 if __name__ == "__main__":
     mr_obj = MR5Reducer()
