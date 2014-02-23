@@ -35,7 +35,6 @@ class MR1Reducer:
        
             except:
                 print "MR1-Reducer-Exception"
-                continue  
           
         print "%s\t%s" % (cur_user_id, list(set(item_list)))
 
