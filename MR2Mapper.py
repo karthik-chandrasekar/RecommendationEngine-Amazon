@@ -18,10 +18,13 @@ class MR2Mapper:
                 if not line:continue
 
                 items_string = line.split("\t")[1]
-                item_string_list = eval(items_string)
-                item_string_list = [item.split(":")[0] for item in item_string_list if item]
                 
+                #Performance trick
+                eval_call = eval('lambda: ' + items_string)
+                item_string_list = eval_call()
+
                 if len(item_string_list) == 1:continue
+                item_string_list = [item.split(":")[0] for item in item_string_list if item]
                 item_item_perm = itertools.permutations(set(item_string_list), 2)
                 
                 for item_item_pair in item_item_perm:
@@ -29,7 +32,6 @@ class MR2Mapper:
 
             except:
                 print "MR2-Mapper - Exception"
-                continue
 
 if __name__ == "__main__":
     mr2_obj = MR2Mapper()
